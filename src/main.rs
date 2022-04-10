@@ -18,5 +18,4 @@ fn main() {
     println!("{}", a_grid);
 
     a_grid.diff();
-
 }

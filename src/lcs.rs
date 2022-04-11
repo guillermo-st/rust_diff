@@ -13,7 +13,6 @@ pub struct Lcs<'t> {
 }
 
 impl Lcs<'_> {
-
     ///Returns a new Lcs with the provided String sequences.
     ///
     /// # Arguments

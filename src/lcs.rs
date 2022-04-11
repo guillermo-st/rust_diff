@@ -4,13 +4,22 @@ use std::fmt;
 mod diff;
 
 #[derive(Debug)]
+///Represents the "Longest Common Subsequence" operation between two String vectors.
 pub struct Lcs<'t> {
+    ///Matrix filled on Lcs construction, used to calculate the common sequences.
     grid: Vec<Vec<u8>>,
     first_sequence: &'t [String],
     second_sequence: &'t [String],
 }
 
 impl Lcs<'_> {
+
+    ///Returns a new Lcs with the provided String sequences.
+    ///
+    /// # Arguments
+    ///
+    /// * `first_sequence` - A reference to a vector of Strings, with equal dimention to the resulting Lcs matrix columns.
+    /// * `second_sequence` - A reference to a vector of Strings, with equal dimention to the resulting Lcs matrix rows.
     pub fn new<'t>(first_sequence: &'t [String], second_sequence: &'t [String]) -> Lcs<'t> {
         let first_len = first_sequence.len();
         let sec_len = second_sequence.len();
@@ -32,6 +41,7 @@ impl Lcs<'_> {
         }
     }
 
+    ///Prints a diff based on the sequences provided on construction, using the Lcs matrix to calculate it.
     pub fn diff(&self) {
         diff::diff_rec(
             &self.grid,
@@ -43,6 +53,7 @@ impl Lcs<'_> {
     }
 }
 
+///Implementation of the "Display" trait to allow for printing Lcs to stdout.
 impl fmt::Display for Lcs<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut grid_string = String::new();

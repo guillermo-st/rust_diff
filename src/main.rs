@@ -9,10 +9,11 @@ fn read_file_lines(filename: &str) -> io::Result<Vec<String>> {
     BufReader::new(File::open(filename)?).lines().collect()
 }
 
-fn main() {
+fn main() -> Result<(), &'static str> {
     let args: Vec<String> = env::args().collect();
     if args.len() != 3 {
-        panic!("[ERR] Invalid number of arguments to generate diff. Usage: $ diff <filename1> <filename2>");
+        eprintln!("[ERR] Invalid number of arguments to generate diff. Usage: $ diff <filename1> <filename2>");
+        return Err("[ERR] Invalid number of arguments to generate diff.");
     }
 
     let first_filename = &args[1].as_str();
@@ -25,9 +26,16 @@ fn main() {
         (Ok(first_seq), Ok(sec_seq)) => {
             let longest_common_sequence = lcs::Lcs::new(&first_seq, &sec_seq);
             longest_common_sequence.diff();
+            Ok(())
         }
 
-        (Err(e), _) => eprintln!("[ERR] Unable to read first file to generate diff. {}", e),
-        (_, Err(e)) => eprintln!("[ERR] Unable to read second file to generate diff. {}", e),
+        (Err(e), _) => {
+            eprintln!("[ERR] Unable to read first file to generate diff. {}", e);
+            Err("[ERR] Invalid number of arguments to generate diff.")
+        }
+        (_, Err(e)) => {
+            eprintln!("[ERR] Unable to read second file to generate diff. {}", e);
+            Err("[ERR] Invalid number of arguments to generate diff.")
+        }
     }
 }

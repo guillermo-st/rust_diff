@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["main",""],["read_file_lines","Return a Result<Vec> which contents are all the lines in the # filename file in abscence of error."]],"mod":[["lcs",""]]});
